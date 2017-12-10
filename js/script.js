@@ -37,38 +37,19 @@ console.log(url);
 $.getJSON( url, function( data ) {
   var items = data.response.docs;
 
+  $nytHeaderElem.text("New York Times Articles About " + city);
+
   for (var i=0; i < items.length; i++) {
-  console.log(items[i].headline.main);
-  console.log(items[i].byline.original);
-  console.log(items[i].snippet);
-  console.log(items[i].web_url);
-  console.log(items[i].word_count);
-
 //Put articles into HTML
-$(".article-list").append("<li> <a href=\"" + items[i].web_url + "\">" + items[i].headline.main + "</li>");
+$(".article-list").append("<li> <a href=\"" + items[i].web_url + "\"" + "target=\"_blank\" >" + items[i].headline.main + "</a>" + "</br>" + items[i].byline.original + "</br>" + "Snippet: " + items[i].snippet + "</br>" + "Word count: " + items[i].word_count + "</li>");
 
-
-//put listing into html
-//function myFunction() {
-//    var para = document.createElement("LI");
-//    var t = document.createTextNode("items[i].headline.main");
-//    para.appendChild(t);
-//    document.getElementById("nytimes-articles").appendChild(para);};
 }  // end for loop
 
-});  // end getJSON
+}).fail(function() {  $nytHeaderElem.text("New York Times Articles could not be loaded");});  // end getJSON
 
 
-//    items.push( "<li id='" + key + "'>" + val + "</li>" );
 //}); stray code?
 
-
-
-//  $( "<ul/>", {
-//    "class": "article-list",
-//    html: items.join( "" )
-//  }).appendTo( "body" );
-//};
 
 
 
