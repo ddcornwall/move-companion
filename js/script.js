@@ -45,8 +45,7 @@ $.getJSON( url, function( data ) {
   console.log(items[i].word_count);
 
 //Put articles into HTML
-$(".article-list").append("<li> <a href=/"" + items[i].web_url + "/">" + items[i].headline.main + "</li>");
-// $(".article-list").append("<li>" + items[i].headline.main + "</li>" );
+$(".article-list").append("<li> <a href=\"" + items[i].web_url + "\">" + items[i].headline.main + "</li>");
 
 
 //put listing into html
