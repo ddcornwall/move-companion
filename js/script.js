@@ -11,8 +11,6 @@ function loadData() {
     $wikiElem.text("");
     $nytElem.text("");
 
-    //testing putting js into html
-    //$(".content .value").html("World!");
 
         // load streetview
 
@@ -39,16 +37,45 @@ $.getJSON( url, function( data ) {
 
   $nytHeaderElem.text("New York Times Articles About " + city);
 
-  for (var i=0; i < items.length; i++) {
 //Put articles into HTML
+  for (var i=0; i < items.length; i++) {
 $(".article-list").append("<li> <a href=\"" + items[i].web_url + "\"" + "target=\"_blank\" >" + items[i].headline.main + "</a>" + "</br>" + items[i].byline.original + "</br>" + "Snippet: " + items[i].snippet + "</br>" + "Word count: " + items[i].word_count + "</li>");
 
 }  // end for loop
 
-}).fail(function() {  $nytHeaderElem.text("New York Times Articles could not be loaded");});  // end getJSON
+}).fail(function() {  $nytHeaderElem.text("New York Times articles could not be loaded");});  // end getJSON
 
+//Load Wikipedia articles
+//create WikiURL
+var wikiUrl="https://en.wikipedia.org/w/api.php?action=opensearch&search=" + city + "&format=json&callback=?"
+console.log(wikiUrl);
 
-//}); stray code?
+$.ajax({
+url: wikiUrl,
+dataType: 'jsonp',
+success: function (data) {
+var entries = data;
+  //Put articles into HTML
+  //Wikipedia returns four nameless arrays: 1) title, 2) snippet, 3) URL
+    for (var j=0; j < entries[1].length; j++)  {
+  $("#wikipedia-links").append("<li> <a href=\"" + entries[3][j] + "\"" + "target=\"_blank\" >" + entries[1][j] + "</a>" + "</br>" + entries[2][j] + "</li>");
+  }  // end for loop
+},
+error: function (errorMessage) {  $wikiElem.text.text("Wikipedia articles could not be loaded");} //this did not work 12/12/2017
+}
+);
+
+//Load Wikipedia
+//$.ajax({
+  //url: '//en.wikipedia.org/w/api.php',
+  //data: { action: 'query', list: 'search', srsearch: 'Richard Feynman', format: 'json' },
+  //dataType: 'jsonp',
+  //success: function (x) {
+    //console.log('title', x.query.search[0].title);
+
+  //}
+//});
+
 
 
 
